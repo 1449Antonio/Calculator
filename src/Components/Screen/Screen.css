@@ -1,5 +1,7 @@
 .Screen{
     background-color: lightgray;
     height: 100px;
-    margin: 0px
+    position: absolute;
+    bottom: 38%;
+    width: 1300px;
 }
