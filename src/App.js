@@ -1,5 +1,7 @@
 import Screen from './Components/Screen/Screen'
 import ButtonContainer from './Components/Buttons/ButtonContainer'
+import History from './Components/History/History'
+import Menu from './Components/Menu/Menu'
 import './App.css';
 import React, {useState, useEffect} from 'react';
 
@@ -11,6 +13,8 @@ function App() {
   const [operation, setOperation] = useState('');
   const [operand2, setOperand2] = useState(Infinity);
   const [operationIndex, setOperationIndex] = useState(-1);
+  const [executed, setExecuted] = useState(false);
+  const [historyValue, setHistoryValue] = useState('')
 
   const createOperand = (operand, oneOrTwo) => {
 
@@ -33,7 +37,6 @@ function App() {
         setOperand1(parseInt(operand))
       else
       {
-        console.log(operand)
         setOperand2(parseInt(operand))
       }
       
@@ -48,6 +51,7 @@ function App() {
       else 
         setOperands(operand1 / operand2)
 
+      setExecuted(true)
       setOperation('')
       setOperand1(Infinity)
       setOperand2(Infinity)
@@ -65,6 +69,16 @@ function App() {
     else if (val === 'undo'){
       if (operands.length === 1)
         setOperands('');
+      else if (operation !== '')
+      {
+        setOperation('')
+        setOperands(operands.substring(0, operands.length - 1));
+      }
+      else if (operand1 !== Infinity)
+      {
+        setOperand1(Infinity)
+        setOperands(operands.substring(0, operands.length - 1));
+      }
       else
          setOperands(operands.substring(0, operands.length - 1));
     }
@@ -114,6 +128,17 @@ function App() {
        if (operands.at(i) === '+' || operands.at(i) === '-' || operands.at(i) === '*' || operands.at(i) === '/')
          setOperationIndex(i);
     }
+
+    if (executed === true)
+    {
+      setExecuted(false)
+      setHistoryValue(operands)
+    }
+    else
+    {
+      setHistoryValue('')
+    }
+
     if (operand2 !== Infinity)
        executeOperation('');
     window.addEventListener('keydown', buttonSelection)
@@ -140,6 +165,8 @@ function App() {
   }
   return (
     <div className="App">
+        <Menu></Menu>
+        <History value = {historyValue}></History>
         <Screen value = {screenVal}/>
         <ButtonContainer oper = {operClick} /> 
     </div>
