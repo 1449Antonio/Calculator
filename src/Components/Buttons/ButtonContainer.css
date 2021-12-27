@@ -1,0 +1,10 @@
+.ButtonContainer{
+    bottom: 50%;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto;
+    bottom: 0%;
+    left: 0.5%;
+    position: absolute;
+    height: 250px;
+    width: 1280px;
+}
