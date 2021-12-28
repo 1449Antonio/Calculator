@@ -15,6 +15,7 @@ function App() {
   const [operationIndex, setOperationIndex] = useState(-1);
   const [executed, setExecuted] = useState(false);
   const [historyValue, setHistoryValue] = useState('')
+  const [operandHistory, setOperandHistory] = useState('')
 
   const createOperand = (operand, oneOrTwo) => {
 
@@ -42,6 +43,7 @@ function App() {
       
   }
   const executeOperation = (input) =>{
+      setOperandHistory(operands)
       if (operation === '+')
         setOperands(operand1 + operand2)
       else if (operation === '-')
@@ -166,7 +168,7 @@ function App() {
   return (
     <div className="App">
         <Menu></Menu>
-        <History value = {historyValue}></History>
+        <History value = {historyValue} operandHist = {operandHistory}></History>
         <Screen value = {screenVal}/>
         <ButtonContainer oper = {operClick} /> 
     </div>
