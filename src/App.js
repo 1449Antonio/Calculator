@@ -4,6 +4,7 @@ import History from './Components/History/History'
 import Menu from './Components/Menu/Menu'
 import './App.css';
 import React, {useState, useEffect} from 'react';
+import Help from './Components/Menu/Help/Help'
 
 
 function App() {
@@ -117,6 +118,7 @@ function App() {
     }
   }
 
+
   useEffect(() =>{
     if (operands.length !== 0)
       setScreenVal(operands)
@@ -143,6 +145,8 @@ function App() {
 
     if (operand2 !== Infinity)
        executeOperation('');
+
+    
     window.addEventListener('keydown', buttonSelection)
     return() => {
       window.removeEventListener('keydown', buttonSelection)
@@ -165,14 +169,14 @@ function App() {
         operClick('=')
        
   }
-  return (
-    <div className="App">
-        <Menu></Menu>
-        <History value = {historyValue} operandHist = {operandHistory}></History>
-        <Screen value = {screenVal}/>
-        <ButtonContainer oper = {operClick} /> 
-    </div>
-  );
+    return (
+      <div className="App">
+          <Menu/>
+          <History value = {historyValue} operandHist = {operandHistory}></History>
+          <Screen value = {screenVal}/>
+          <ButtonContainer oper = {operClick} /> 
+      </div>
+    );
 }
 
 export default App;
