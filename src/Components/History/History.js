@@ -1,42 +1,38 @@
 import './History.css';
 import React, {useState, useEffect} from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
+import HistoryEntry from './HistoryEntry/HistoryEntry'
 
 function History(props) {
-    const[currentHistory, setCurrentHistory] = useState('');
     const[showHistory, setShowHistory] = useState(false)
-    const[dropDown, setDropDown] = useState(false)
-    const[operandHistory, setOperandHistory] = useState('')
+    const[operationHistory, setOperationHistory] = useState([])
     
-    const showOperands = () =>{
-      if (dropDown === false)
-        setDropDown(true)
-      else
-        setDropDown(false)
-    }
 
     useEffect(()=>{
+        console.log(operationHistory.length)
         if (props.value !== '')
         {
-          setCurrentHistory(props.value)
+          let num = operationHistory.length;
+          let history = {
+            id: num + 1,
+            value: props.value,
+            operation: props.operandHist
+          };
+
+          let temp = operationHistory;
+          temp.push(history);
+          setOperationHistory(temp);
           setShowHistory(true)
         }
-        if (props.operandHist !== '')
-          setOperandHistory(props.operandHist)
     }, [props])
 
     return (
 
       <div className="History">
         {
-        (showHistory === true) ? <p style = {{margin: '0px'}}>{currentHistory}<button style = {{cursor: 'pointer', width: '20px'}} onClick = {showOperands}><FontAwesomeIcon icon = {faAngleDown}></FontAwesomeIcon></button></p>
-        : <p>{currentHistory}</p>
-        }
-
-        {
-        (dropDown === true) ? <p style = {{backgroundColor: 'white', border: '1px solid black', height: '20px', fontSize: '100%', margin: '0px', width: '30px', position: 'absolute', left: '48.5%'}}>{operandHistory}</p>
-        : console.log('')
+        (showHistory) ? operationHistory.map((Hist)=> (
+          <HistoryEntry key = {Hist.id} operHistory = {Hist}/>
+        ))
+        : null
         }
       </div>
     );
