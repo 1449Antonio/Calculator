@@ -58,6 +58,7 @@ function App() {
       setOperation('')
       setOperand1(Infinity)
       setOperand2(Infinity)
+
   }
 
   const operClick = (val) =>{
@@ -133,15 +134,14 @@ function App() {
          setOperationIndex(i);
     }
 
-    if (executed === true)
+    if (executed)
     {
-      setExecuted(false)
       setHistoryValue(operands)
+      setExecuted(false)
     }
     else
-    {
       setHistoryValue('')
-    }
+
 
     if (operand2 !== Infinity)
        executeOperation('');
@@ -152,7 +152,7 @@ function App() {
       window.removeEventListener('keydown', buttonSelection)
     }
 
-  }, [operands, operand1, operand2])
+  }, [operands, operand1, operand2, executed])
 
   const buttonSelection = (event) => {
     if (event.key === '0' || event.key === '1' || event.key === '2' || event.key === '3' ||
