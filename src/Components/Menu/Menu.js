@@ -22,11 +22,12 @@ function Menu(props) {
       else 
         setShowPopup(false)
     }, [helpPopup, aboutPopup])
+
     return (    
-      <div className="Menu">
+      <div className="Menu" style={{zIndex: '0'}}>
           <button onClick = {()=>toggleHelp()}>Help</button>
           <button style = {{margin: '10px'}} onClick = {()=>toggleAbout()}>About Calculator</button>
-          <button>Clear History</button>
+          <button onClick={()=>props.clear()}>Clear History</button>
           {
             (helpPopup && showPopup) ? <Help click={toggleHelp}/> 
             : (aboutPopup && showPopup) ? <Info click={toggleAbout}/>
