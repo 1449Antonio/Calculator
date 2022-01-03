@@ -1,0 +1,9 @@
+.History{
+    overflow-y: auto;
+    z-index: 0;
+    position: relative;
+    height: 252px;
+    display: flex;
+    align-content: center;
+    flex-direction: column-reverse;
+}
