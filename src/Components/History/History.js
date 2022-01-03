@@ -5,11 +5,15 @@ import HistoryEntry from './HistoryEntry/HistoryEntry'
 function History(props) {
     const[showHistory, setShowHistory] = useState(false)
     const[operationHistory, setOperationHistory] = useState([])
-    
+    const[historyNum, setHistoryNum] = useState(0)
+
 
     useEffect(()=>{
-        console.log(operationHistory.length)
-        if (props.value !== '')
+        if (props.value === 'delete'){
+          setShowHistory(false)
+          setOperationHistory([])
+        }
+        else if (props.value !== '')
         {
           let num = operationHistory.length;
           let history = {
@@ -23,14 +27,15 @@ function History(props) {
           setOperationHistory(temp);
           setShowHistory(true)
         }
+        setHistoryNum(operationHistory.length)
     }, [props])
 
     return (
 
-      <div className="History">
+      <div className="History" >
         {
-        (showHistory) ? operationHistory.map((Hist)=> (
-          <HistoryEntry key = {Hist.id} operHistory = {Hist}/>
+        (showHistory) ? operationHistory.slice(0).reverse().map((Hist)=> (
+          <HistoryEntry key = {Hist.id} operHistory = {Hist} click = {props.newHistory} num = {historyNum}/>
         ))
         : null
         }
