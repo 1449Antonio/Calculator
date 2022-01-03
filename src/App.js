@@ -169,10 +169,25 @@ function App() {
         operClick('=')
        
   }
+
+  const deleteHistory = () =>{
+    setHistoryValue('delete')
+    setOperandHistory('delete')
+  }
+
+  const newHistory = (val, id) =>{
+      if (val.operHistory.operation !== operandHistory || val.operHistory.value !== operands)
+      {
+        setOperandHistory(val.operHistory.operation)
+        setOperands(val.operHistory.value)
+        setExecuted(true)
+      }
+  }
+
     return (
       <div className="App">
-          <Menu/>
-          <History value = {historyValue} operandHist = {operandHistory}></History>
+          <Menu clear = {deleteHistory}/>
+          <History value = {historyValue} operandHist = {operandHistory} newHistory = {newHistory}></History>
           <Screen value = {screenVal}/>
           <ButtonContainer oper = {operClick} /> 
       </div>
