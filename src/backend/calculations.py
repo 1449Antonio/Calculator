@@ -1,3 +1,4 @@
+import math
 
 def parenthesisCalculation(value):
     index = 0
@@ -32,13 +33,21 @@ def parenthesisCalculation(value):
         i = i + 1
 
     i = 0
+    while (i < len(value)):
+        if (value[i].startswith('R')):
+            value[i] = str(math.sqrt(float(value[i][1:len(value[i])])))
+        elif (value[i].startswith('Q')):
+            value[i] = str(math.pow(float(value[i][1:len(value[i])]), 2))
+        i = i + 1
+
+    i = 0
     while(i < len(value)):
-        if (value[i] == '*'):
+        if (value[i] == "*"):
             value[i] = str(float(value[i-1]) * float(value[i+1]))
             value.pop(i-1)
             value.pop(i)
             i = i - 1
-        elif(value[i] == '/'):
+        elif(value[i] == "/"):
             value[i] = str(float(value[i-1]) / float(value[i+1]))
             value.pop(i-1)
             value.pop(i)
@@ -47,12 +56,12 @@ def parenthesisCalculation(value):
 
     i = 0
     while(i < len(value)):
-        if (value[i] == '+'):
+        if (value[i] == "+"):
             value[i] = str(float(value[i-1]) + float(value[i+1]))
             value.pop(i-1)
             value.pop(i)
             i = i - 1
-        elif(value[i] == '-'):
+        elif(value[i] == "-"):
             value[i] = str(float(value[i-1]) - float(value[i+1]))
             value.pop(i-1)
             value.pop(i)
@@ -90,7 +99,7 @@ def calculation(value):
     print(parenthesisCalculation(operations))
 
 def main():
-    calculation("20+(5+10*123-(123+4)*(145-123)/12)")
+    calculation("20+(R16+(52-1))")
 
 if __name__ == "__main__":
     main()
