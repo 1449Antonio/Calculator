@@ -1,12 +1,20 @@
 import math
 
+    
 def parenthesisCalculation(value):
-    index = 0
     i = 0
-    tempOper = []
-    tempVal = []
+    parenthesisCount = 0
+    while (i < len(value)):
+        if (value[i].startswith('R') or value[i].startswith('Q')):
+            value[i] = value[i][0] + calculation(value[i][1:len(value[i])])
+        i = i + 1
+
     parenthesisCount = 0
     parenthesis = False
+    index = 0
+    tempOper = []
+    tempVal = []
+    i = 0
     while (i < len(value)):
         if(parenthesis):
             if (value[i] == ")" and parenthesisCount == 0):
@@ -73,33 +81,46 @@ def parenthesisCalculation(value):
 def calculation(value):
     operations = []
     temp = ""
-    num = 0
+    i = 0
     closeParenthesis = False
-    for i in value:
-        if (i.isdigit() or i.isalpha() or i == '.'):
-            temp = temp + i
-        elif ((i == '+' or i == '-' or i == '*' or i == '/') and not closeParenthesis):
+    while (i < len(value)):
+        if (value[i].isdigit() or value[i].isalpha() or value[i] == '.'):
+            temp = temp + value[i]
+            if (value[i].isalpha()):
+                parenthesisCount = 1
+                temp = temp + value[i+1]
+                i = i + 2
+                while (parenthesisCount >= 1):
+                    if (value[i] == '('):
+                        parenthesisCount = parenthesisCount + 1
+                    elif (value[i] == ')'):
+                        parenthesisCount = parenthesisCount - 1
+                    temp = temp + value[i]
+                    i = i + 1
+                i = i - 1
+        elif ((value[i] == '+' or value[i] == '-' or value[i] == '*' or value[i] == '/') and not closeParenthesis):
             operations.append(temp)
-            operations.append(i)
+            operations.append(value[i])
             temp = ""
-        elif((i == '+' or i == '-' or i == '*' or i == '/') and closeParenthesis):
-            operations.append(i)
+        elif((value[i] == '+' or value[i] == '-' or value[i] == '*' or value[i] == '/') and closeParenthesis):
+            operations.append(value[i])
             closeParenthesis = False
-        elif (i == ')'):
+        elif (value[i] == ')'):
             operations.append(temp)
-            operations.append(i)
+            operations.append(value[i])
             temp = ""
             closeParenthesis = True
         else:
-            operations.append(i)
+            operations.append(value[i])
+        i = i + 1
     if (len(temp) != 0):
         operations.append(temp)
         temp = ""
     
-    print(parenthesisCalculation(operations))
+    return parenthesisCalculation(operations)
 
 def main():
-    calculation("20+(R16+(52-1))")
+    print(calculation("20+(R(16+9)+(10+23.263*50))"))
 
 if __name__ == "__main__":
     main()
